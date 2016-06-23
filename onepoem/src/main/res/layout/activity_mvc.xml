@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.FirstActivity">
+
+    <include layout="@layout/app_title" />
+
+    <EditText
+        android:id="@+id/name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:hint="name" />
+
+    <EditText
+        android:id="@+id/pwd_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:hint="password"
+        android:inputType="numberPassword" />
+
+    <Button
+        android:id="@+id/test_bt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:text="测试" />
+
+    <TextView
+        android:id="@+id/name_pwd_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:hint="这里用于显示显示姓名密码"
+        android:minHeight="@dimen/dp_60"
+        android:paddingLeft="@dimen/dp_16" />
+
+</LinearLayout>

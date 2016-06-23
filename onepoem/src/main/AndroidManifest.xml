@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="puyuntech.com.onepoem">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 添加可以向外拨打电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".app.APP"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 注册网络广播 -->
+        <receiver android:name=".app.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.activity.WelcomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/ActTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.MVPActivity"
+            android:label="@string/app_name"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.main.MainActivity"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.TitleActivity"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.ListActivity"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.list.PullToRefreshUseActivity"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.NetStatusActivity"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.HttpActivity"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.ManagerActivity"
+            android:theme="@style/ActTheme" />
+        <activity
+            android:name=".ui.activity.poem.PoemDetailActivity"
+            android:theme="@style/ActTheme" />
+        <!-- 分享 -->
+        <activity
+            android:name=".ui.activity.ShareActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 分享 -->
+
+
+        <!-- Ping++ SDK 注册 -->
+        <!-- <activity -->
+        <!-- android:name="com.puyuntech.sixcontry.ui.test.PayActivityDemo" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- Ping++ SDK 注册 -->
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信支付注册 -->
+        <!--
+        这个元素用于给targetActivity属性所指定Activity设定一个别名，
+        目标Activity必须跟别名Activity在同一个应用程序中，
+        并且这个Activity必须在别名之前被声明。
+        -->
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+        <!-- 支付宝注册 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+
+        <!-- 银联支付activity -->
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:screenOrientation="portrait" />
+        <!-- Ping++ 支付结束 -->
+        <activity android:name=".ui.activity.find.PublishDiyPoemActivity"
+            android:theme="@style/ActTheme" ></activity>
+    </application>
+
+</manifest>

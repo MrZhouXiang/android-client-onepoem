@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/home_icon_list_click" android:state_checked="true" />
+    <item android:drawable="@drawable/home_icon_list" android:state_checked="false"/>
+</selector><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/drawable/abc_item_background_holo_dark.xml -->

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_80"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/content_inseart_et"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:background="@color/blue"
+        android:hint="请输入文字" />
+
+    <ImageView
+        android:id="@+id/del_iv"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_2"
+        android:src="@drawable/ic_launcher"
+        android:visibility="gone" />
+</RelativeLayout>
