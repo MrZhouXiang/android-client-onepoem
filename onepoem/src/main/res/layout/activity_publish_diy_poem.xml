@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/yellow"
     android:orientation="vertical"
     tools:context="puyuntech.com.onepoem.ui.activity.find.PublishDiyPoemActivity">
 
@@ -17,21 +18,19 @@
             android:id="@+id/content_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/yellow">
+            android:layout_weight="1">
 
         </android.support.v7.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
 
             <ImageView
                 android:id="@+id/img_add_iv"
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="@dimen/dp_80"
-                android:background="@color/red"
                 android:src="@drawable/fab_add" />
         </LinearLayout>
     </LinearLayout>

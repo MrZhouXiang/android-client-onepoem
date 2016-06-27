@@ -45,17 +45,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
      * 添加一张图片
      */
     private void addOnePic() {
-        List<EditMod> list_one = new ArrayList<>();
-        EditMod mod3 = new EditMod();
-        mod3.setContent("http://110.173.23.108:8080/res/assets/img/model/91a724d6-5d87-4af7-b12a-c3d64fd6b91e.jpg");
-        mod3.setItemType(EditMod.IMG);
-        list_one.add(mod3);
-        EditMod mod = new EditMod();
-        mod.setContent("");
-        mod.setItemType(EditMod.TEXT);
-        list_one.add(mod);
-        list.addAll(list_one);
-        mQuickAdapter.addData(list_one);
+        showCameraChoose();
     }
 
 
@@ -72,22 +62,8 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     @Override
     public void initData() {
         list = new ArrayList();
-        EditMod mod = new EditMod();
-        mod.setContent("");
-        mod.setItemType(EditMod.HEADER);
-        list.add(mod);
-        EditMod mod2 = new EditMod();
-        mod2.setContent("");
-        mod2.setItemType(EditMod.TEXT);
-        list.add(mod2);
-        EditMod mod3 = new EditMod();
-        mod3.setContent("http://110.173.23.108:8080/res/assets/img/model/91a724d6-5d87-4af7-b12a-c3d64fd6b91e.jpg");
-        mod3.setItemType(EditMod.IMG);
-        list.add(mod3);
-        list.add(mod2);
-        list.add(mod2);
-        list.add(mod2);
-        list.add(mod2);
+        list.add(EditMod.MOD_HEADER);//加一个头部
+        list.add(EditMod.MOD_TEXT);//加一个文字编写
         initAdapter();
 
     }
@@ -148,5 +124,16 @@ public class PublishDiyPoemActivity extends ActivityDirector {
         mQuickAdapter = new EditAdapter(this, list);
     }
 
-
+    @Override
+    public void afterSelect(String imagePath) {
+        //增加本地图片展示
+        List<EditMod> list_one = new ArrayList<>();
+        EditMod mod3 = new EditMod();
+        mod3.setContent(imagePath);
+        mod3.setItemType(EditMod.IMG);
+        list_one.add(mod3);
+        list_one.add(EditMod.MOD_TEXT);
+        list.addAll(list_one);
+        mQuickAdapter.addData(list_one);
+    }
 }
