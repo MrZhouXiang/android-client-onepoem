@@ -34,6 +34,7 @@ import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 import puyuntech.com.onepoem.R;
+import puyuntech.com.onepoem.model.EditMod;
 import puyuntech.com.onepoem.utils.MyUtils;
 
 public abstract class BaseAct extends AppCompatActivity {
@@ -382,7 +383,7 @@ public abstract class BaseAct extends AppCompatActivity {
      * @param after
      */
     public void showCHDialog(String title, final String[] list, final boolean[] list2, final AfterCheck after) {
-        final List<Integer> positons = new ArrayList<>();
+        final List<Integer> positons = new ArrayList();
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMultiChoiceItems(list, list2, new DialogInterface.OnMultiChoiceClickListener() {

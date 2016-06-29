@@ -123,7 +123,7 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
             public void onItemClick(View view, int position) {
 
                 PoemMod mod = (PoemMod) mQuickAdapter.getData().get(position);
-                HashMap<String, Object> map = new HashMap<>();
+                HashMap<String, Object> map = new HashMap();
                 map.put("model", mod);
                 skipIntent(PoemDetailActivity.class, map, false);
 

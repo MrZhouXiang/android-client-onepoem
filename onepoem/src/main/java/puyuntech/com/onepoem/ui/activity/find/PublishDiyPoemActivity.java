@@ -4,7 +4,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.nicodelee.utils.JsonUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -12,10 +14,15 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import puyuntech.com.onepoem.R;
 import puyuntech.com.onepoem.app.ActivityBuilder.Impl.ActivityDirector;
+import puyuntech.com.onepoem.app.AppDataUtils;
+import puyuntech.com.onepoem.http.httpContor.Result;
+import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.model.EditMod;
+import puyuntech.com.onepoem.presenter.find.PublishDiyPoemPresenter;
 import puyuntech.com.onepoem.ui.adapter.EditAdapter;
 
 /**
@@ -61,6 +68,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
 
     @Override
     public void initData() {
+        mPresenter = new PublishDiyPoemPresenter(this);
         list = new ArrayList();
         list.add(EditMod.MOD_HEADER);//加一个头部
         list.add(EditMod.MOD_TEXT);//加一个文字编写
@@ -127,7 +135,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     @Override
     public void afterSelect(String imagePath) {
         //增加本地图片展示
-        List<EditMod> list_one = new ArrayList<>();
+        List<EditMod> list_one = new ArrayList();
         EditMod mod3 = new EditMod();
         mod3.setContent(imagePath);
         mod3.setItemType(EditMod.IMG);
@@ -135,5 +143,38 @@ public class PublishDiyPoemActivity extends ActivityDirector {
         list_one.add(EditMod.MOD_TEXT);
         list.addAll(list_one);
         mQuickAdapter.addData(list_one);
+        //上传照片
+        ((PublishDiyPoemPresenter)mPresenter).uploadFile(imagePath);
+//        MeHttpImpl.getMHttpImpl(getApp()).avatar(AppDataUtils.userid, path, new HttpAfterExpand() {
+//            @Override
+//            public void afferHttp() {
+//
+//            }
+//
+//            @Override
+//            public void afterSuccess(Result resultBean) {
+//                Object data = resultBean.getData();
+//                Map map = JsonUtils
+//                        .getObjectMapper().convertValue(
+//                                data,
+//                                Map.class);
+//                String url = (String) map.get("image");
+//                AppDataUtils.user.avatar = url;
+//                Glide.with(getActivity()).load(path).into(image);
+//                showToast("上传成功");
+//
+//            }
+//
+//            @Override
+//            public void afterFail(Result resultBean) {
+//                showToast("上传失败:" + resultBean.errormsg);
+//
+//            }
+//
+//            @Override
+//            public void afterError(Result resultBean) {
+//
+//            }
+//        });
     }
 }

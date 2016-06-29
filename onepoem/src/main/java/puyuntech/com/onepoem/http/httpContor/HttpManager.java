@@ -9,6 +9,7 @@ import puyuntech.com.onepoem.http.httpContor.base.DynastyHttp;
 import puyuntech.com.onepoem.http.httpContor.base.HttpFactory;
 import puyuntech.com.onepoem.http.httpContor.base.LoginHttp;
 import puyuntech.com.onepoem.http.httpContor.base.PoemHttp;
+import puyuntech.com.onepoem.http.httpContor.base.UploadHttp;
 
 
 /**
@@ -63,6 +64,11 @@ public class HttpManager extends HttpFactory {
             mHttp = (T) DynastyHttpImpl.getMHttpImpl();
             if (needProxy)
                 mHttp = (T) getProxy((DynastyHttp) mHttp);
+        }
+        if (c.equals(UploadHttp.class)) {
+            mHttp = (T) UploadHttpImpl.getMHttpImpl();
+            if (needProxy)
+                mHttp = (T) getProxy((UploadHttp) mHttp);
         }
         if (mHttp == null) {
             Toast.makeText(APP.getInstance(), "传入的接口类型没有匹配!", Toast.LENGTH_SHORT).show();

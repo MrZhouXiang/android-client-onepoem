@@ -39,7 +39,7 @@ public class PullToRefreshPresenter extends BasePresenter {
     }
 
     public void loadMore() {
-        int currentPageSize = (int) mIUpdateUIListener.getValue(ValueGetType.CURRENT_PAGE_SIZE);
+        int currentPageSize = (Integer) mIUpdateUIListener.getValue(ValueGetType.CURRENT_PAGE_SIZE);
         if (currentPageSize >= TOTAL_COUNTER) {
             mIUpdateUIListener.updateUI(DataServer.getSampleData(5), UpdateUIType.LOAD_MORE);
         } else {

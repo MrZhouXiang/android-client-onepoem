@@ -35,7 +35,7 @@ public class URLUtils {
     /**
      * 服务器地址
      */
-    public static final String BASE_URL = "http://172.21.1.221:8080/";
+    public static final String BASE_URL = "http://172.21.1.232:8080/";
 
 
     /**
@@ -83,6 +83,11 @@ public class URLUtils {
      * 返回:
      */
     public static final String GET_DYNASTY_LIST = BASE_URL_APP + "getDynastyList";
+
+    /**
+     * 上传文件
+     */
+    public static final String UPLOAD = BASE_URL_APP + "/upload";
 
 
 }

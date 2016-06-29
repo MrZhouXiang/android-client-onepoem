@@ -25,7 +25,7 @@ public class DataServer {
     }
 
     public static List<Status> getSampleData(int lenth) {
-        List<Status> list = new ArrayList<>();
+        List<Status> list = new ArrayList();
         for (int i = 0; i < lenth; i++) {
             Status status = new Status();
             status.setUserName("Chad" + i);
@@ -53,7 +53,7 @@ public class DataServer {
     }
 
     public static List<MySection> getSampleData() {
-        List<MySection> list = new ArrayList<>();
+        List<MySection> list = new ArrayList();
         list.add(new MySection(true, "2016/4/8", true));
         list.add(new MySection(new Video(HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK, CYM_CHAD)));
         list.add(new MySection(new Video(HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK, CYM_CHAD)));
@@ -76,7 +76,7 @@ public class DataServer {
     }
 
     public static List<String> getStrData() {
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList();
         for (int i = 0; i < 20; i++) {
             String str = HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK;
             if (i % 2 == 0) {
@@ -88,7 +88,7 @@ public class DataServer {
     }
 
     public static List<MultipleItem> getMultipleItemData() {
-        List<MultipleItem> list = new ArrayList<>();
+        List<MultipleItem> list = new ArrayList();
         for (int i = 0; i < 20; i++) {
             MultipleItem multipleItem = new MultipleItem();
             String str = HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK;
