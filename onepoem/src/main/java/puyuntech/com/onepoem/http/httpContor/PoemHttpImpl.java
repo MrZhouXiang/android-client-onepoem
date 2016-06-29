@@ -75,7 +75,15 @@ public class PoemHttpImpl extends BaseHttpImpl implements PoemHttp {
                 // 注意: 如果服务返回304或 onCache 选择了信任缓存, 这里将不会被调用,
                 // 但是 onFinished 总会被调用.
                 afterHttp.afferHttp();
-                afterSuccess(result, afterHttp);
+//                afterSuccess(result, afterHttp);
+                final Result resultBean = JsonUtils.readValue(result, Result.class);
+                String code = resultBean.getCode();
+                switch (Integer.valueOf(code)) {
+                    case URLUtils.RESULT_SUCCESS:
+                        afterHttp.afterSuccess(resultBean);
+                    default:
+                        afterHttp.afterError(null);
+                }
             }
 
             @Override

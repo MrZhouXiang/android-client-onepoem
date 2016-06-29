@@ -80,7 +80,6 @@ public class PoemPresenter extends BasePresenter {
                         @Override
                         public void afterSuccess(Result resultBean) {
                             //todo 成功，
-                            List<Object> rightDataTem;
                             //解析数据，保存到本地
                             Map data = resultBean.getResult();
                             PoemMod[] modelNet = JsonUtils

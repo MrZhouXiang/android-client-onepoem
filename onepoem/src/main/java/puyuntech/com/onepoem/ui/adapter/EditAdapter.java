@@ -1,9 +1,11 @@
 package puyuntech.com.onepoem.ui.adapter;
 
 import android.content.Context;
+import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.nicodelee.utils.HandlerUtil;
 
 import java.util.List;
 
@@ -36,6 +38,10 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
 //                helper.setText(R.id.content_inseart_et, "总长度：" + getItemCount() + "当前位置：" + helper.getAdapterPosition() + "");//文字展示
                 if (helper.getAdapterPosition() + 1 == getItemCount()) {
                     helper.setVisible(R.id.del_iv, false);
+                    final EditText et = helper.getView(R.id.content_inseart_et);
+                    et.setFocusable(true);
+                    et.setFocusableInTouchMode(true);
+                    et.requestFocus();
                 } else {
                     helper.setVisible(R.id.del_iv, true);
                 }

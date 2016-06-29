@@ -40,15 +40,20 @@ public class UploadHttpImpl extends BaseHttpImpl implements UploadHttp {
     @Override
     public RequestParams uploadFile(String type, String path, final HttpAfterExpand afterHttp) {
         RequestParams params = new RequestParams(URLUtils.UPLOAD);
-//        params.addBodyParameter("userid", userid);//必须用addBodyParameter，否则文件加不上
-//        params.addBodyParameter("image", BitmapHelper.compressBitmap(path,100,100,false));
         params.setMultipart(true);
-        params.addBodyParameter("photo_list", new File(BitmapHelper.compressBitmap(path, 200, 200, false)));
+        params.addBodyParameter("type", type);//必须用addBodyParameter，否则文件加不上
+        params.addBodyParameter("photo_list", new File(BitmapHelper.compressBitmap(path, 400, 400, false)));
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 final Result resultBean = JsonUtils.readValue(result, Result.class);
-                afterHttp.afterSuccess(resultBean);
+                String code = resultBean.getCode();
+                switch (Integer.valueOf(code)) {
+                    case URLUtils.RESULT_SUCCESS:
+                        afterHttp.afterSuccess(resultBean);
+                    default:
+                        afterHttp.afterError(null);
+                }
             }
 
             @Override

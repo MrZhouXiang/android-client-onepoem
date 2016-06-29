@@ -4,9 +4,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.nicodelee.utils.JsonUtils;
+import com.nicodelee.utils.HandlerUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -14,13 +13,10 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import cn.sharesdk.framework.utils.UIHandler;
 import puyuntech.com.onepoem.R;
 import puyuntech.com.onepoem.app.ActivityBuilder.Impl.ActivityDirector;
-import puyuntech.com.onepoem.app.AppDataUtils;
-import puyuntech.com.onepoem.http.httpContor.Result;
-import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.model.EditMod;
 import puyuntech.com.onepoem.presenter.find.PublishDiyPoemPresenter;
 import puyuntech.com.onepoem.ui.adapter.EditAdapter;
@@ -63,6 +59,32 @@ public class PublishDiyPoemActivity extends ActivityDirector {
 
     @Override
     public void updateUI(Object params, Enum type) {
+        PublishDiyPoemPresenter.UpdateUIType type1 = (PublishDiyPoemPresenter.UpdateUIType) type;
+        switch (type1) {
+            case UPLOADIMG_SUCCESS:
+                String path = (String) params;
+                //增加本地图片展示
+                List<EditMod> list_one = new ArrayList();
+                EditMod mod3 = new EditMod();
+                mod3.setContent(path);
+                mod3.setItemType(EditMod.IMG);
+                list_one.add(mod3);
+                list_one.add(EditMod.MOD_TEXT);
+                list.addAll(list_one);//本地数据更新
+                mQuickAdapter.getData().addAll(list_one);//列表UI数据更新
+                mQuickAdapter.notifyItemRangeChanged(mQuickAdapter.getItemCount() - 1, 2);
+                HandlerUtil.getUIHandler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        content_rv.scrollToPosition(mQuickAdapter.getItemCount() - 1);//滑动到最低部
+                    }
+                },300);
+                break;
+
+            default:
+                break;
+        }
+
 
     }
 
@@ -134,47 +156,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
 
     @Override
     public void afterSelect(String imagePath) {
-        //增加本地图片展示
-        List<EditMod> list_one = new ArrayList();
-        EditMod mod3 = new EditMod();
-        mod3.setContent(imagePath);
-        mod3.setItemType(EditMod.IMG);
-        list_one.add(mod3);
-        list_one.add(EditMod.MOD_TEXT);
-        list.addAll(list_one);
-        mQuickAdapter.addData(list_one);
         //上传照片
-        ((PublishDiyPoemPresenter)mPresenter).uploadFile(imagePath);
-//        MeHttpImpl.getMHttpImpl(getApp()).avatar(AppDataUtils.userid, path, new HttpAfterExpand() {
-//            @Override
-//            public void afferHttp() {
-//
-//            }
-//
-//            @Override
-//            public void afterSuccess(Result resultBean) {
-//                Object data = resultBean.getData();
-//                Map map = JsonUtils
-//                        .getObjectMapper().convertValue(
-//                                data,
-//                                Map.class);
-//                String url = (String) map.get("image");
-//                AppDataUtils.user.avatar = url;
-//                Glide.with(getActivity()).load(path).into(image);
-//                showToast("上传成功");
-//
-//            }
-//
-//            @Override
-//            public void afterFail(Result resultBean) {
-//                showToast("上传失败:" + resultBean.errormsg);
-//
-//            }
-//
-//            @Override
-//            public void afterError(Result resultBean) {
-//
-//            }
-//        });
+        ((PublishDiyPoemPresenter) mPresenter).uploadFile(imagePath);
     }
 }

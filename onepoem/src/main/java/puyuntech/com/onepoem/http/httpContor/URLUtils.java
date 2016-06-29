@@ -47,7 +47,11 @@ public class URLUtils {
      * 资源存放路径
      */
     public static final String RES_PATH = BASE_URL + "/../res";
-
+    /**
+     * diypoem图片路径
+     */
+    public static final String DEFAULT_DIY_PATH = RES_PATH
+            + "/assets/img/diypoem/";
     /**
      * 头像图片路径
      */
