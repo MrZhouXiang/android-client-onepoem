@@ -30,6 +30,7 @@
                 android:id="@+id/img_add_iv"
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="@dimen/dp_80"
+                android:background="@color/yellow"
                 android:src="@drawable/fab_add" />
         </LinearLayout>
     </LinearLayout>

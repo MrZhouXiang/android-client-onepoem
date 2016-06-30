@@ -1,11 +1,12 @@
 package puyuntech.com.onepoem.ui.adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.nicodelee.utils.HandlerUtil;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
     int height = 0;
 
     @Override
-    protected void convert(BaseViewHolder helper, EditMod item) {
+    protected void convert(final BaseViewHolder helper, final EditMod item) {
         switch (helper.getItemViewType()) {
             case EditMod.TEXT:
 //                helper.setText(R.id.content_inseart_et, "总长度：" + getItemCount() + "当前位置：" + helper.getAdapterPosition() + "");//文字展示
@@ -46,6 +47,23 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
                     helper.setVisible(R.id.del_iv, true);
                 }
                 helper.setOnClickListener(R.id.del_iv, new OnItemChildClickListener());
+                EditText et0 = helper.getView(R.id.content_inseart_et);
+                et0.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        item.setContent(s.toString());
+                    }
+                });
                 break;
             case EditMod.IMG:
                 helper.setImageUrl(R.id.img_show_iv, item.getContent());//图片展示
@@ -57,11 +75,32 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
                 helper.setOnClickListener(R.id.del_iv, new OnItemChildClickListener());
                 break;
             case EditMod.HEADER:
-//                helper.setOnClickListener(R.id.img_add_iv, new OnItemChildClickListener());
+                helper.setOnClickListener(R.id.url_iv, new OnItemChildClickListener());
+                EditText et = helper.getView(R.id.title_et);
+                et.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        title = s.toString();
+                    }
+                });
                 break;
         }
 
     }
 
+    String title = "";//
 
+    public String getTitleText() {
+        return title;
+    }
 }

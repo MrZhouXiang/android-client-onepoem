@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_80"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/content_inseart_et"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
-        android:hint="请输入文字" />
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="请输入文字"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_6"
+        android:textSize="@dimen/sp_14" />
 
     <ImageView
         android:id="@+id/del_iv"

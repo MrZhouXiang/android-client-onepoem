@@ -93,5 +93,10 @@ public class URLUtils {
      */
     public static final String UPLOAD = BASE_URL_APP + "/upload";
 
+    /**
+     *
+     */
+    public static final String PUBLISH_DIYPOEM = BASE_URL_APP + "/publishDiyPoem";
+
 
 }

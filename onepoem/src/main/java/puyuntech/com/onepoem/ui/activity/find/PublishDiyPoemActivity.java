@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.nicodelee.utils.HandlerUtil;
+import com.nicodelee.utils.JsonUtils;
+import com.nicodelee.utils.StringUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -14,9 +16,9 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.sharesdk.framework.utils.UIHandler;
 import puyuntech.com.onepoem.R;
 import puyuntech.com.onepoem.app.ActivityBuilder.Impl.ActivityDirector;
+import puyuntech.com.onepoem.model.DiyPoemMod;
 import puyuntech.com.onepoem.model.EditMod;
 import puyuntech.com.onepoem.presenter.find.PublishDiyPoemPresenter;
 import puyuntech.com.onepoem.ui.adapter.EditAdapter;
@@ -31,7 +33,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     RecyclerView content_rv;
     private EditAdapter mQuickAdapter;
     List<EditMod> list;
-
+    DiyPoemMod mod;
 
     @Event({R.id.img_add_iv})
     private void clickEvent(View view) {
@@ -69,7 +71,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
                 mod3.setContent(path);
                 mod3.setItemType(EditMod.IMG);
                 list_one.add(mod3);
-                list_one.add(EditMod.MOD_TEXT);
+                list_one.add(new EditMod("", EditMod.TEXT));
                 list.addAll(list_one);//本地数据更新
                 mQuickAdapter.getData().addAll(list_one);//列表UI数据更新
                 mQuickAdapter.notifyItemRangeChanged(mQuickAdapter.getItemCount() - 1, 2);
@@ -78,9 +80,12 @@ public class PublishDiyPoemActivity extends ActivityDirector {
                     public void run() {
                         content_rv.scrollToPosition(mQuickAdapter.getItemCount() - 1);//滑动到最低部
                     }
-                },300);
+                }, 300);
                 break;
-
+            case PUBLISH_SUCCESS:
+                //发布成功，关闭页面
+                finishOK();
+                break;
             default:
                 break;
         }
@@ -91,9 +96,10 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     @Override
     public void initData() {
         mPresenter = new PublishDiyPoemPresenter(this);
+        mod = new DiyPoemMod();
         list = new ArrayList();
         list.add(EditMod.MOD_HEADER);//加一个头部
-        list.add(EditMod.MOD_TEXT);//加一个文字编写
+        list.add(new EditMod("", EditMod.TEXT));//加一个文字编写
         initAdapter();
 
     }
@@ -118,6 +124,9 @@ public class PublishDiyPoemActivity extends ActivityDirector {
                         mQuickAdapter.remove(position);//删除UI
                         mQuickAdapter.notifyDataSetChanged();//跟新所有UI
                         break;
+                    case R.id.url_iv:
+                        showToast("增加封面");
+                        break;
                 }
             }
         });
@@ -137,7 +146,23 @@ public class PublishDiyPoemActivity extends ActivityDirector {
 
     @Override
     public void rightTextClick() {
-        showShortToast("发布");
+        String title = mQuickAdapter.getTitleText();
+        if (StringUtils.isEmpty(title)) {
+            showShortToast("标题不能为空!");
+            return;
+        }
+//        showShortToast(title);
+        mod.setTitle(title);
+        mod.setIs_publish("1");
+        String content = "";
+        List l = new ArrayList();
+        l.addAll(mQuickAdapter.getData());
+        l.remove(0);
+        content = JsonUtils.toJson(l);
+        mod.setContent(content);
+        mod.setUser_id("1");
+        ((PublishDiyPoemPresenter) mPresenter).publishDiyPoem(mod);
+
     }
 
 

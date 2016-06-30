@@ -9,9 +9,11 @@ import java.util.Map;
 import puyuntech.com.onepoem.http.httpContor.HttpManager;
 import puyuntech.com.onepoem.http.httpContor.Result;
 import puyuntech.com.onepoem.http.httpContor.URLUtils;
+import puyuntech.com.onepoem.http.httpContor.base.DiyPoemHttp;
 import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.http.httpContor.base.HttpFactory;
 import puyuntech.com.onepoem.http.httpContor.base.UploadHttp;
+import puyuntech.com.onepoem.model.DiyPoemMod;
 import puyuntech.com.onepoem.presenter.BasePresenter;
 
 /**
@@ -72,13 +74,51 @@ public class PublishDiyPoemPresenter extends BasePresenter {
     }
 
     /**
+     * 发布诗文
+     *
+     * @param mod
+     */
+    public void publishDiyPoem(DiyPoemMod mod) {
+        try {
+            HttpManager.getInstance().getHttpByMethod(DiyPoemHttp.class).publishDiyPoem(mod, new HttpAfterExpand() {
+                @Override
+                public void afferHttp() {
+
+                }
+
+                @Override
+                public void afterSuccess(Result resultBean) {
+                    //解析数据，保存到本地
+                    showToast("发布成功");
+                    mIUpdateUIListener.updateUI(null, UpdateUIType.PUBLISH_SUCCESS);
+
+                }
+
+                @Override
+                public void afterFail(Result resultBean) {
+                    //                showToast("上传失败:" + resultBean.errormsg);
+
+                }
+
+                @Override
+                public void afterError(Result resultBean) {
+
+                }
+            });
+        } catch (HttpFactory.NotInterFaceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 数据获取类型
      */
     public enum ValueGetType {
     }
 
     public enum UpdateUIType {
-        UPLOADIMG_SUCCESS
+        UPLOADIMG_SUCCESS,
+        PUBLISH_SUCCESS
     }
 
     public PublishDiyPoemPresenter(Context context) {

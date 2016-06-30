@@ -5,6 +5,7 @@ import android.widget.Toast;
 import java.lang.reflect.InvocationHandler;
 
 import puyuntech.com.onepoem.app.APP;
+import puyuntech.com.onepoem.http.httpContor.base.DiyPoemHttp;
 import puyuntech.com.onepoem.http.httpContor.base.DynastyHttp;
 import puyuntech.com.onepoem.http.httpContor.base.HttpFactory;
 import puyuntech.com.onepoem.http.httpContor.base.LoginHttp;
@@ -70,6 +71,13 @@ public class HttpManager extends HttpFactory {
             if (needProxy)
                 mHttp = (T) getProxy((UploadHttp) mHttp);
         }
+
+        if (c.equals(DiyPoemHttp.class)) {
+            mHttp = (T) DiyPoemHttpImpl.getMHttpImpl();
+            if (needProxy)
+                mHttp = (T) getProxy((DiyPoemHttp) mHttp);
+        }
+
         if (mHttp == null) {
             Toast.makeText(APP.getInstance(), "传入的接口类型没有匹配!", Toast.LENGTH_SHORT).show();
             throw new NullPointerException();
