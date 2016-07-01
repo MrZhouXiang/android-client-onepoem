@@ -35,6 +35,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     List<EditMod> list;
     DiyPoemMod mod;
 
+
     @Event({R.id.img_add_iv})
     private void clickEvent(View view) {
         switch (view.getId()) {
@@ -148,8 +149,13 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     @Override
     public void rightTextClick() {
         String title = mQuickAdapter.getTitleText();
+        String tag = mQuickAdapter.getTag();
         if (StringUtils.isEmpty(title)) {
             showShortToast("标题不能为空!");
+            return;
+        }
+        if (StringUtils.isEmpty(tag)) {
+            showShortToast("tag不能为空!");
             return;
         }
 //        showShortToast(title);
@@ -162,7 +168,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
         content = JsonUtils.toJson(l);
         mod.setContent(content);
         mod.setUser_id("1");
-        mod.setTag("!@#精选!@#");
+        mod.setTag("!@#" + tag + "!@#");
         ((PublishDiyPoemPresenter) mPresenter).publishDiyPoem(mod);
 
     }

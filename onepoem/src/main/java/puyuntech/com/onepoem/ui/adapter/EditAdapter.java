@@ -1,16 +1,22 @@
 package puyuntech.com.onepoem.ui.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.nicodelee.utils.ListUtils;
 
 import java.util.List;
 
 import puyuntech.com.onepoem.R;
+import puyuntech.com.onepoem.app.AppDataUtils;
 import puyuntech.com.onepoem.http.httpContor.URLUtils;
 import puyuntech.com.onepoem.model.EditMod;
 
@@ -33,6 +39,7 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
 
     int height = 0;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void convert(final BaseViewHolder helper, final EditMod item) {
         switch (helper.getItemViewType()) {
@@ -99,12 +106,44 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
                         title = s.toString();
                     }
                 });
+                RadioGroup tags_rg = helper.getView(R.id.tags_rg);
+                ;//标签
+                int j = 0;
+                for (int i = 0; i < ListUtils.getSize(AppDataUtils.tags); i++) {
+                    if (Integer.valueOf(AppDataUtils.tags.get(i).getId()) <= 0) {
+                        //删除“全部”,“精选”标签
+                        continue;
+                    }
+                    RadioButton rb =
+                            (RadioButton) mLayoutInflater.inflate(R.layout.radio_button_tag, null);
+                    rb.setText(AppDataUtils.tags.get(i).getName());
+                    rb.setWidth(mContext.getResources().getDimensionPixelSize(R.dimen.dp_60));
+                    rb.setHeight(mContext.getResources().getDimensionPixelSize(R.dimen.dp_40));
+                    if (!flag && j == 0) {
+                        //默认选中第一个
+                        rb.setChecked(true);
+                        tag = AppDataUtils.tags.get(i).getName();
+                    }
+                    rb.setId(j);
+                    j++;
+                    tags_rg.addView(rb);
+                }
+                tags_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        RadioButton rb = (RadioButton) group.getChildAt(checkedId);
+                        tag = rb.getText().toString();
+//                        T.showShort(mContext, "选中：" + rb.getText());
+//                        group.getCheckedRadioButtonId();
+                    }
+                });
                 break;
         }
 
     }
 
     String title = "";//
+    String tag = "";//
     boolean flag = false;//是否需要focus到最后一个edittext
 
     public boolean isFlag() {
@@ -117,5 +156,9 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
 
     public String getTitleText() {
         return title;
+    }
+
+    public String getTag() {
+        return tag;
     }
 }
