@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import puyuntech.com.onepoem.R;
+import puyuntech.com.onepoem.http.httpContor.URLUtils;
 import puyuntech.com.onepoem.model.EditMod;
 
 
@@ -38,11 +39,16 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
             case EditMod.TEXT:
 //                helper.setText(R.id.content_inseart_et, "总长度：" + getItemCount() + "当前位置：" + helper.getAdapterPosition() + "");//文字展示
                 if (helper.getAdapterPosition() + 1 == getItemCount()) {
+                    //最后一行
                     helper.setVisible(R.id.del_iv, false);
-                    final EditText et = helper.getView(R.id.content_inseart_et);
-                    et.setFocusable(true);
-                    et.setFocusableInTouchMode(true);
-                    et.requestFocus();
+                    // TODO: 2016/7/1 0001 如果是最后一行 且是从选择图片界面返回来的
+                    if (flag) {
+                        final EditText et = helper.getView(R.id.content_inseart_et);
+                        et.setFocusable(true);
+                        et.setFocusableInTouchMode(true);
+                        et.requestFocus();
+                        flag = false;
+                    }
                 } else {
                     helper.setVisible(R.id.del_iv, true);
                 }
@@ -66,7 +72,7 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
                 });
                 break;
             case EditMod.IMG:
-                helper.setImageUrl(R.id.img_show_iv, item.getContent());//图片展示
+                helper.setImageUrl(R.id.img_show_iv, URLUtils.DEFAULT_DIY_PATH + item.getContent());//图片展示
                 if (helper.getAdapterPosition() + 1 == getItemCount()) {
                     helper.setVisible(R.id.del_iv, false);
                 } else {
@@ -99,6 +105,15 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
     }
 
     String title = "";//
+    boolean flag = false;//是否需要focus到最后一个edittext
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     public String getTitleText() {
         return title;

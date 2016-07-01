@@ -10,6 +10,7 @@ import puyuntech.com.onepoem.http.httpContor.base.DynastyHttp;
 import puyuntech.com.onepoem.http.httpContor.base.HttpFactory;
 import puyuntech.com.onepoem.http.httpContor.base.LoginHttp;
 import puyuntech.com.onepoem.http.httpContor.base.PoemHttp;
+import puyuntech.com.onepoem.http.httpContor.base.TagHttp;
 import puyuntech.com.onepoem.http.httpContor.base.UploadHttp;
 
 
@@ -76,6 +77,11 @@ public class HttpManager extends HttpFactory {
             mHttp = (T) DiyPoemHttpImpl.getMHttpImpl();
             if (needProxy)
                 mHttp = (T) getProxy((DiyPoemHttp) mHttp);
+        }
+        if (c.equals(TagHttp.class)) {
+            mHttp = (T) TagHttpImpl.getMHttpImpl();
+            if (needProxy)
+                mHttp = (T) getProxy((TagHttp) mHttp);
         }
 
         if (mHttp == null) {

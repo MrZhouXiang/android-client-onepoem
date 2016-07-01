@@ -4,6 +4,7 @@ package puyuntech.com.onepoem.app;
 import java.util.ArrayList;
 
 import puyuntech.com.onepoem.model.DynastyMod;
+import puyuntech.com.onepoem.model.TagMod;
 
 /**
  * 作者：zx
@@ -22,6 +23,13 @@ public class AppDataUtils {
         add(new DynastyMod("4", "明"));
         add(new DynastyMod("5", "清"));
     }};
-
+    public static ArrayList<TagMod> tags = new ArrayList<TagMod>() {{
+        add(new TagMod("0", "随笔"));
+        add(new TagMod("1", "小清新"));
+        add(new TagMod("2", "么么哒"));
+        add(new TagMod("3", "励志"));
+        add(new TagMod("4", "理想"));
+        add(new TagMod("5", "夜色"));
+    }};
 
 }

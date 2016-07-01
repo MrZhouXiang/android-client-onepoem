@@ -54,12 +54,6 @@ public class PoemPresenter extends BasePresenter {
 
     public void loadMore() {
         getDateNet(UpdateUIType.LOAD_MORE);
-//        int currentPageSize = (int) mIUpdateUIListener.getValue(ValueGetType.CURRENT_PAGE_SIZE);
-//        if (currentPageSize >= TOTAL_COUNTER) {
-//            mIUpdateUIListener.updateUI(DataServer.getSampleData(5), UpdateUIType.LOAD_MORE);
-//        } else {
-//            mIUpdateUIListener.updateUI(DataServer.getSampleData(pageSize), UpdateUIType.LOAD_MORE);
-//        }
     }
 
     private void getDateNet(final UpdateUIType type) {

@@ -9,9 +9,8 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import puyuntech.com.onepoem.http.httpContor.base.DiyPoemHttp;
 import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
-import puyuntech.com.onepoem.model.DiyPoemMod;
+import puyuntech.com.onepoem.http.httpContor.base.TagHttp;
 
 
 /**
@@ -19,11 +18,11 @@ import puyuntech.com.onepoem.model.DiyPoemMod;
  * @创建时间 2016/2/5 0005
  * @描述 诗词相关接口
  **/
-public class DiyPoemHttpImpl extends BaseHttpImpl implements DiyPoemHttp {
+public class TagHttpImpl extends BaseHttpImpl implements TagHttp {
 
-    private static DiyPoemHttpImpl mHttpImpl = new DiyPoemHttpImpl();//单例的接口处理类
+    private static TagHttpImpl mHttpImpl = new TagHttpImpl();//单例的接口处理类
 
-    private DiyPoemHttpImpl() {
+    private TagHttpImpl() {
     }
 
     /**
@@ -31,64 +30,20 @@ public class DiyPoemHttpImpl extends BaseHttpImpl implements DiyPoemHttp {
      *
      * @return
      */
-    public static DiyPoemHttpImpl getMHttpImpl() {
+    public static TagHttpImpl getMHttpImpl() {
         return mHttpImpl;
     }
 
 
     @Override
-    public RequestParams publishDiyPoem(DiyPoemMod mod, final HttpAfterExpand afterHttp) {
-        RequestParams params = new RequestParams(URLUtils.PUBLISH_DIYPOEM);
-        params.addBodyParameter("title",mod.getTitle());
-        params.addBodyParameter("content",mod.getContent());
-        params.addBodyParameter("url",mod.getUrl());
-        params.addBodyParameter("user_id",mod.getUser_id());
-        params.addBodyParameter("is_publish",mod.getIs_publish());
-        params.addBodyParameter("tag",mod.getTag());
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                final Result resultBean = JsonUtils.readValue(result, Result.class);
-                String code = resultBean.getCode();
-                switch (Integer.valueOf(code)) {
-                    case URLUtils.RESULT_SUCCESS:
-                        afterHttp.afterSuccess(resultBean);
-                    default:
-                        afterHttp.afterError(null);
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                afterHttp.afterError(null);
-                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-                afterHttp.afterError(null);
-                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFinished() {
-                afterHttp.afferHttp();
-
-            }
-        });
-        return params;
-    }
-
-    @Override
-    public RequestParams getDiyPoemList(String id, String size, String page, String tag,final HttpAfterExpand afterHttp) {
-        RequestParams params = new RequestParams(URLUtils.GET_DIYPOEMLIST);
+    public RequestParams getTagList(String id, String size, final HttpAfterExpand afterHttp) {
+        //        if (isProxy()) {
+        RequestParams params = new RequestParams(URLUtils.GET_TAG_LIST);
         params.addQueryStringParameter("id", id);
         params.addQueryStringParameter("size", size);
-        params.addQueryStringParameter("page", page);
-        params.addQueryStringParameter("tag", tag);
         // 默认缓存存活时间, 单位:毫秒.(如果服务没有返回有效的max-age或Expires)
         params.setCacheMaxAge(1000 * 60);
-        x.http().post(params, new Callback.CacheCallback<String>() {
+        x.http().get(params, new Callback.CacheCallback<String>() {
             @Override
             public boolean onCache(String result) {
                 // 得到缓存数据, 缓存过期后不会进入这个方法.
@@ -119,15 +74,7 @@ public class DiyPoemHttpImpl extends BaseHttpImpl implements DiyPoemHttp {
                 // 注意: 如果服务返回304或 onCache 选择了信任缓存, 这里将不会被调用,
                 // 但是 onFinished 总会被调用.
                 afterHttp.afferHttp();
-//                afterSuccess(result, afterHttp);
-                final Result resultBean = JsonUtils.readValue(result, Result.class);
-                String code = resultBean.getCode();
-                switch (Integer.valueOf(code)) {
-                    case URLUtils.RESULT_SUCCESS:
-                        afterHttp.afterSuccess(resultBean);
-                    default:
-                        afterHttp.afterError(null);
-                }
+                afterSuccess(result, afterHttp);
             }
 
             @Override
@@ -147,6 +94,10 @@ public class DiyPoemHttpImpl extends BaseHttpImpl implements DiyPoemHttp {
 
             }
         });
+//        } else {
+//            Toast.makeText(x.app(), "请使用getProxy()获取代理类", Toast.LENGTH_LONG).show();
+//            L.e("请使用getProxy()获取代理类");
+//        }
         return params;
 
     }

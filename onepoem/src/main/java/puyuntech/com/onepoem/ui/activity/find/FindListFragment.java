@@ -2,13 +2,10 @@ package puyuntech.com.onepoem.ui.activity.find;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.nicodelee.utils.ListUtils;
@@ -24,9 +21,9 @@ import puyuntech.com.onepoem.app.ActivityBuilder.Impl.FragmentDirector;
 import puyuntech.com.onepoem.app.AppDataUtils;
 import puyuntech.com.onepoem.app.BaseAct;
 import puyuntech.com.onepoem.model.PoemMod;
-import puyuntech.com.onepoem.presenter.poem.PoemPresenter;
+import puyuntech.com.onepoem.presenter.find.PublishDiyPoemPresenter;
 import puyuntech.com.onepoem.ui.activity.poem.PoemDetailActivity;
-import puyuntech.com.onepoem.ui.adapter.PoemFragmentAdapter;
+import puyuntech.com.onepoem.ui.adapter.DiyPoemFragmentAdapter;
 
 @ContentView(R.layout.fragment_find_list)
 public class FindListFragment extends FragmentDirector implements BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
@@ -44,7 +41,7 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
     @ViewInject(R.id.content_rv)
     RecyclerView mRecyclerView;
 
-    private PoemFragmentAdapter mQuickAdapter;
+    private DiyPoemFragmentAdapter mQuickAdapter;
     private int delayMillis = 1000;
     private int mCurrentCounter = 0;
     private int position = 0;
@@ -52,7 +49,7 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
 
     @Override
     public Object getValue(Enum type) {
-        PoemPresenter.ValueGetType type1 = (PoemPresenter.ValueGetType) type;
+        PublishDiyPoemPresenter.ValueGetType type1 = (PublishDiyPoemPresenter.ValueGetType) type;
         switch (type1) {
             case CURRENT_PAGE_SIZE:
                 //获取的值
@@ -60,9 +57,9 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
             case GET_LAST:
                 //获取的值
                 return ListUtils.isEmpty(mQuickAdapter.getData()) ? null : mQuickAdapter.getData().get(ListUtils.getSize(mQuickAdapter.getData()) - 1);
-            case GET_DYNASTY_ID:
+            case GET_TAG:
                 //获取朝代ID
-                return AppDataUtils.dynasty.get(position).getId();
+                return AppDataUtils.tags.get(position).getName();
             default:
                 break;
         }
@@ -71,7 +68,7 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
 
     @Override
     public void updateUI(final Object params, Enum type) {
-        PoemPresenter.UpdateUIType type1 = (PoemPresenter.UpdateUIType) type;
+        PublishDiyPoemPresenter.UpdateUIType type1 = (PublishDiyPoemPresenter.UpdateUIType) type;
         switch (type1) {
             case LOAD_MORE:
                 //加载更多
@@ -103,7 +100,7 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
 
     @Override
     public void initData() {
-        mPresenter = new PoemPresenter(this);
+        mPresenter = new PublishDiyPoemPresenter(this);
         initAdapter();
     }
 
@@ -150,7 +147,7 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
     @Override
     public void getDataNet() {
 //        ((BaseAct) getActivity()).loadingDialog.showDialog();
-        ((PoemPresenter) mPresenter).refresh();
+        ((PublishDiyPoemPresenter) mPresenter).refresh();
 
     }
 
@@ -163,19 +160,19 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
     @Override
     public void onRefresh() {
         //刷新
-        ((PoemPresenter) mPresenter).refresh();
+        ((PublishDiyPoemPresenter) mPresenter).refresh();
 
     }
 
     @Override
     public void onLoadMoreRequested() {
         //加载更多
-        ((PoemPresenter) mPresenter).loadMore();
+        ((PublishDiyPoemPresenter) mPresenter).loadMore();
     }
 
 
     private void initAdapter() {
-        mQuickAdapter = new PoemFragmentAdapter(getActivity());
+        mQuickAdapter = new DiyPoemFragmentAdapter(getActivity());
         mQuickAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mCurrentCounter = mQuickAdapter.getItemCount();
         mQuickAdapter.openLoadMore(pageSize, true);//or call mQuickAdapter.setPageSize(PAGE_SIZE);  mQuickAdapter.openLoadMore(true);
@@ -184,15 +181,4 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
     }
 
 
-    private void addHeadView() {
-        View headView = getActivity().getLayoutInflater().inflate(R.layout.publish_diy_poem_act_head_view, null);
-        headView.setLayoutParams(new DrawerLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        headView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "click HeadView", Toast.LENGTH_LONG).show();
-            }
-        });
-        mQuickAdapter.addHeaderView(headView);
-    }
 }

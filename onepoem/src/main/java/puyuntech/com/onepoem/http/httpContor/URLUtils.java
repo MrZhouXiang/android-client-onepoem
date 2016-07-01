@@ -82,11 +82,20 @@ public class URLUtils {
      */
     public static final String GET_POEMLIST = BASE_URL_APP + "getPoemList";
     /**
+     * 发现
+     */
+    public static final String GET_DIYPOEMLIST = BASE_URL_APP + "getDiyPoemList";
+    /**
      * 说明:获取朝代列表
      * 入参:
      * 返回:
      */
     public static final String GET_DYNASTY_LIST = BASE_URL_APP + "getDynastyList";
+
+    /**
+     * 系统标签获取
+     */
+    public static final String GET_TAG_LIST = BASE_URL_APP + "getTagList";
 
     /**
      * 上传文件

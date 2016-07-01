@@ -2,8 +2,6 @@ package puyuntech.com.onepoem.http.httpContor.base;
 
 import org.xutils.http.RequestParams;
 
-import puyuntech.com.onepoem.model.DiyPoemMod;
-
 /**
  * @作者 zx
  * @创建时间 2016-04-19 下午 14:11
@@ -12,16 +10,15 @@ import puyuntech.com.onepoem.model.DiyPoemMod;
  * @修改描述
  * @修改者 zx
  **/
-public interface DiyPoemHttp {
+public interface TagHttp {
     /**
      * 缓存
      * 列表数据
      *
-     * @param afterHttp
+     * @param id   第一条id
+     * @param size 大小
      * @return
      */
-    RequestParams publishDiyPoem(DiyPoemMod mod, final HttpAfterExpand afterHttp);
+    RequestParams getTagList(String id, String size, final HttpAfterExpand afterHttp);
 
-
-    RequestParams getDiyPoemList(String id, String size, String page, String tag, HttpAfterExpand list);
 }

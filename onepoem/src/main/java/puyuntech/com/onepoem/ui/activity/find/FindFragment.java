@@ -76,8 +76,8 @@ public class FindFragment extends FragmentDirector implements BaseQuickAdapter.R
     @Override
     public void initData() {
         titleList = new ArrayList();
-        for (int i = 0; i < ListUtils.getSize(AppDataUtils.dynasty); i++) {
-            titleList.add(AppDataUtils.dynasty.get(i).getName());
+        for (int i = 0; i < ListUtils.getSize(AppDataUtils.tags); i++) {
+            titleList.add(AppDataUtils.tags.get(i).getName());
         }
     }
 

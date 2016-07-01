@@ -8,7 +8,6 @@ import com.nicodelee.utils.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import puyuntech.com.onepoem.app.AppDataUtils;
@@ -17,7 +16,9 @@ import puyuntech.com.onepoem.http.httpContor.Result;
 import puyuntech.com.onepoem.http.httpContor.base.DynastyHttp;
 import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.http.httpContor.base.HttpFactory;
+import puyuntech.com.onepoem.http.httpContor.base.TagHttp;
 import puyuntech.com.onepoem.model.DynastyMod;
+import puyuntech.com.onepoem.model.TagMod;
 import puyuntech.com.onepoem.ui.activity.main.MainActivity;
 
 /**
@@ -45,9 +46,54 @@ public class WelcomePresenter extends BasePresenter {
         HandlerUtil.getUIHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getDynastyList();
+                getTagList();
+
             }
         }, 1000);
+    }
+
+
+    /**
+     * 获取系统标签列表
+     */
+    private void getTagList() {
+        try {
+            HttpManager.getInstance().getHttpByMethod(TagHttp.class).getTagList("0", "0", new HttpAfterExpand() {
+                @Override
+                public void afferHttp() {
+                    //                                showProgress(false);
+                }
+
+                @Override
+                public void afterSuccess(Result resultBean) {
+                    //todo 成功，
+                    //解析数据，保存到本地
+                    Map data = resultBean.getResult();
+                    TagMod[] modelNet = JsonUtils
+                            .getObjectMapper().convertValue(
+                                    data.get("list"),
+                                    TagMod[].class);
+                    ArrayList list = new ArrayList();
+                    list.addAll(Arrays.asList(modelNet));
+                    AppDataUtils.tags = list;
+                    getDynastyList();
+//                    skipIntent(MainActivity.class, true);
+//                    ((Activity) context).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+
+                @Override
+                public void afterFail(Result resultBean) {
+
+
+                }
+
+                @Override
+                public void afterError(Result resultBean) {
+                }
+            });
+        } catch (HttpFactory.NotInterFaceException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

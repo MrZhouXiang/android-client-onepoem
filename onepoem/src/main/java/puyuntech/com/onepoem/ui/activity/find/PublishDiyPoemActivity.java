@@ -64,6 +64,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
         PublishDiyPoemPresenter.UpdateUIType type1 = (PublishDiyPoemPresenter.UpdateUIType) type;
         switch (type1) {
             case UPLOADIMG_SUCCESS:
+                mQuickAdapter.setFlag(true);
                 String path = (String) params;
                 //增加本地图片展示
                 List<EditMod> list_one = new ArrayList();
@@ -161,6 +162,7 @@ public class PublishDiyPoemActivity extends ActivityDirector {
         content = JsonUtils.toJson(l);
         mod.setContent(content);
         mod.setUser_id("1");
+        mod.setTag("!@#精选!@#");
         ((PublishDiyPoemPresenter) mPresenter).publishDiyPoem(mod);
 
     }

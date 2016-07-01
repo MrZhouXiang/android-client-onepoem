@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include layout="@layout/include_tags" />
+
         <ImageView
             android:id="@+id/url_iv"
             android:layout_width="match_parent"
@@ -20,14 +22,26 @@
             android:id="@+id/title_et"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
+            android:background="@null"
             android:hint="请输入标题"
-            android:text="" />
+            android:text=""
+            android:textSize="@dimen/sp_20" />
 
         <CheckBox
             android:id="@+id/is_publish_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="是否公开" />
+            android:layout_marginLeft="@dimen/dp_16"
+            android:background="@drawable/bg_check_box"
+            android:button="@null"
+            android:checked="true"
+            android:paddingBottom="@dimen/dp_6"
+            android:paddingLeft="@dimen/dp_6"
+            android:paddingRight="@dimen/dp_6"
+            android:paddingTop="@dimen/dp_6"
+            android:text="公开" />
 
     </LinearLayout>
 </LinearLayout>
