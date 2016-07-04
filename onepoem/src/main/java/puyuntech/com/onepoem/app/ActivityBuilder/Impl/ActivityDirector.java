@@ -246,8 +246,9 @@ public abstract class ActivityDirector extends BaseAct implements BuildHelper, I
     public static final int SELECT_CAMER = 3000;
     /*用来标识请求gallery的activity*/
     private static final int PHOTO_PICKED_WITH_DATA = 3021;
+    private int afterSelectType = -1;//选择照片之后的操作
 
-    public void showCameraChoose() {
+    private void showCameraChoose() {
         CharSequence[] items = {"相册", "相机"};
         new AlertDialog.Builder(this)
                 .setTitle("选择图片来源")
@@ -410,5 +411,19 @@ public abstract class ActivityDirector extends BaseAct implements BuildHelper, I
         showShortToast(imagePath);
     }
 
+    public int getAfterSelectType() {
+        return afterSelectType;
+    }
 
+    public void setAfterSelectType(int afterSelectType) {
+        this.afterSelectType = afterSelectType;
+    }
+
+    /**
+     * 添加一张图片
+     */
+    public void addOnePic(int type) {
+        setAfterSelectType(type);//设置图片类型
+        showCameraChoose();//
+    }
 }

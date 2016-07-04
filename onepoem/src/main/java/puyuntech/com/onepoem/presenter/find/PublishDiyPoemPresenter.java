@@ -32,6 +32,9 @@ import puyuntech.com.onepoem.presenter.BasePresenter;
 public class PublishDiyPoemPresenter extends BasePresenter {
     private static final int TOTAL_COUNTER = 100;//最大页数
 
+    public static final int CONTENT_UPLOAD = 0;
+    public static final int TITLE_UPLOAD = 1;
+
     public void uploadFile(final String imagePath) {
 
 //            List l = new ArrayList();

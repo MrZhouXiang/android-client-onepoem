@@ -10,4 +10,6 @@ package puyuntech.com.onepoem.app.ActivityBuilder;
 public interface CamareHelper {
 
     void afterSelect(String imagePath);
+
+
 }

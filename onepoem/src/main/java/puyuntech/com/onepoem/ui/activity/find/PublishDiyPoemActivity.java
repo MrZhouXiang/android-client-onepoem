@@ -40,18 +40,12 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.img_add_iv:
-                addOnePic();
+                //给内容添加照片
+                addOnePic(PublishDiyPoemPresenter.CONTENT_UPLOAD);
                 break;
             default:
                 break;
         }
-    }
-
-    /**
-     * 添加一张图片
-     */
-    private void addOnePic() {
-        showCameraChoose();
     }
 
 
@@ -67,24 +61,38 @@ public class PublishDiyPoemActivity extends ActivityDirector {
             case UPLOADIMG_SUCCESS:
                 mQuickAdapter.setFlag(true);
                 String path = (String) params;
-                //增加本地图片展示
-                List<EditMod> list_one = new ArrayList();
-                EditMod mod3 = new EditMod();
-                mod3.setContent(path);
-                mod3.setItemType(EditMod.IMG);
-                list_one.add(mod3);
-                list_one.add(new EditMod("", EditMod.TEXT));
-                list.addAll(list_one);//本地数据更新
-                mQuickAdapter.getData().addAll(list_one);//列表UI数据更新
-                mQuickAdapter.notifyItemRangeChanged(mQuickAdapter.getItemCount() - 1, 2);
-                HandlerUtil.getUIHandler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        content_rv.scrollToPosition(mQuickAdapter.getItemCount() - 1);//滑动到最低部
-                    }
-                }, 300);
+                switch (getAfterSelectType()) {
+                    case PublishDiyPoemPresenter.TITLE_UPLOAD:
+//                        showShortToast("封面上传成功:" + path);
+                        //展示封面图片
+                        ((EditMod) mQuickAdapter.getData().get(0)).setContent(path);
+                        mQuickAdapter.notifyItemChanged(0);
+                        mod.setUrl(path);
+                        break;
+                    case PublishDiyPoemPresenter.CONTENT_UPLOAD:
+                        //增加本地图片展示
+                        List<EditMod> list_one = new ArrayList();
+                        EditMod mod3 = new EditMod();
+                        mod3.setContent(path);
+                        mod3.setItemType(EditMod.IMG);
+                        list_one.add(mod3);
+                        list_one.add(new EditMod("", EditMod.TEXT));
+                        list.addAll(list_one);//本地数据更新
+                        mQuickAdapter.getData().addAll(list_one);//列表UI数据更新
+                        mQuickAdapter.notifyItemRangeChanged(mQuickAdapter.getItemCount() - 1, 2);
+                        HandlerUtil.getUIHandler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                content_rv.scrollToPosition(mQuickAdapter.getItemCount() - 1);//滑动到最低部
+                            }
+                        }, 300);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case PUBLISH_SUCCESS:
+                showShortToast("发布成功");
                 //发布成功，关闭页面
                 finishOK();
                 break;
@@ -127,7 +135,9 @@ public class PublishDiyPoemActivity extends ActivityDirector {
                         mQuickAdapter.notifyDataSetChanged();//跟新所有UI
                         break;
                     case R.id.url_iv:
-                        showToast("增加封面");
+                        //给封面添加照片
+                        addOnePic(PublishDiyPoemPresenter.TITLE_UPLOAD);
+                        //showToast("增加封面");
                         break;
                 }
             }
@@ -146,10 +156,15 @@ public class PublishDiyPoemActivity extends ActivityDirector {
 
     }
 
+
     @Override
     public void rightTextClick() {
         String title = mQuickAdapter.getTitleText();
         String tag = mQuickAdapter.getTag();
+        if (StringUtils.isEmpty(mod.getUrl())) {
+            showShortToast("请上传一张封面图片!");
+            return;
+        }
         if (StringUtils.isEmpty(title)) {
             showShortToast("标题不能为空!");
             return;
@@ -191,5 +206,6 @@ public class PublishDiyPoemActivity extends ActivityDirector {
     public void afterSelect(String imagePath) {
         //上传照片
         ((PublishDiyPoemPresenter) mPresenter).uploadFile(imagePath);
+
     }
 }

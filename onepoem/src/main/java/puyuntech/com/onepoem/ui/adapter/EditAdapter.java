@@ -88,6 +88,7 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
                 helper.setOnClickListener(R.id.del_iv, new OnItemChildClickListener());
                 break;
             case EditMod.HEADER:
+                helper.setImageUrl(R.id.url_iv, URLUtils.DEFAULT_DIY_PATH + item.getContent());//图片展示
                 helper.setOnClickListener(R.id.url_iv, new OnItemChildClickListener());
                 EditText et = helper.getView(R.id.title_et);
                 et.addTextChangedListener(new TextWatcher() {
@@ -107,7 +108,7 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
                     }
                 });
                 RadioGroup tags_rg = helper.getView(R.id.tags_rg);
-                ;//标签
+                //标签
                 int j = 0;
                 for (int i = 0; i < ListUtils.getSize(AppDataUtils.tags); i++) {
                     if (Integer.valueOf(AppDataUtils.tags.get(i).getId()) <= 0) {
@@ -161,4 +162,9 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
     public String getTag() {
         return tag;
     }
+
+//    public void showHeaderImg(String path) {
+//        helper.setImageUrl(R.id.url_iv, URLUtils.DEFAULT_DIY_PATH + path);//图片展示
+//        notifyDataSetChanged();
+//    }
 }

@@ -103,16 +103,16 @@ public class DiyPoemHttpImpl extends BaseHttpImpl implements DiyPoemHttp {
                 //   如果服务端返回304, 则表示数据没有更新, 不继续加载数据.
                 //
                 L.v("login-catch");
-//                final Result resultBean = JsonUtils.readValue(result, Result.class);
-//                String code = resultBean.getCode();
-//                switch (Integer.valueOf(code)) {
-//                    case URLUtils.RESULT_SUCCESS:
-//                        afterHttp.afterSuccess(resultBean);
-//                        return true; // true: 信任缓存数据, 不再发起网络请求; false不信任缓存数据.
-//                    default:
-//                        return false;// 本地保存的数据不正确则都需要重新发送网络请求
-//                }
-                return false;// 本地保存的数据不正确则都需要重新发送网络请求
+                final Result resultBean = JsonUtils.readValue(result, Result.class);
+                String code = resultBean.getCode();
+                switch (Integer.valueOf(code)) {
+                    case URLUtils.RESULT_SUCCESS:
+                        afterHttp.afterSuccess(resultBean);
+                        return true; // true: 信任缓存数据, 不再发起网络请求; false不信任缓存数据.
+                    default:
+                        return false;// 本地保存的数据不正确则都需要重新发送网络请求
+                }
+//                return false;// 本地保存的数据不正确则都需要重新发送网络请求
 
             }
 
