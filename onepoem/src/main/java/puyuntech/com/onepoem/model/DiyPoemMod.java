@@ -24,6 +24,7 @@ public class DiyPoemMod implements Serializable {
     private String is_publish; //是否公开
     private Date creat_time;// 发布时间
     private String tag; //标签
+    private String pen_name; //作者笔名
     private int type; //类型0:普通诗词，只有一张图片	1:图文混编诗词，content存储的是json
     private int status; //状态
 
@@ -105,6 +106,14 @@ public class DiyPoemMod implements Serializable {
 
     public void setIs_publish(String is_publish) {
         this.is_publish = is_publish;
+    }
+
+    public String getPen_name() {
+        return pen_name;
+    }
+
+    public void setPen_name(String pen_name) {
+        this.pen_name = pen_name;
     }
 
     public List<EditMod> getContentList() {

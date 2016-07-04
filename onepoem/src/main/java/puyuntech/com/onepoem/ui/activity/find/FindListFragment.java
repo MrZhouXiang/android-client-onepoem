@@ -20,9 +20,8 @@ import puyuntech.com.onepoem.R;
 import puyuntech.com.onepoem.app.ActivityBuilder.Impl.FragmentDirector;
 import puyuntech.com.onepoem.app.AppDataUtils;
 import puyuntech.com.onepoem.app.BaseAct;
-import puyuntech.com.onepoem.model.PoemMod;
+import puyuntech.com.onepoem.model.DiyPoemMod;
 import puyuntech.com.onepoem.presenter.find.PublishDiyPoemPresenter;
-import puyuntech.com.onepoem.ui.activity.poem.PoemDetailActivity;
 import puyuntech.com.onepoem.ui.adapter.DiyPoemFragmentAdapter;
 
 @ContentView(R.layout.fragment_find_list)
@@ -119,10 +118,10 @@ public class FindListFragment extends FragmentDirector implements BaseQuickAdapt
             @Override
             public void onItemClick(View view, int position) {
 
-//                PoemMod mod = (PoemMod) mQuickAdapter.getData().get(position);
-//                HashMap<String, Object> map = new HashMap();
-//                map.put("model", mod);
-//                skipIntent(PoemDetailActivity.class, map, false);
+                DiyPoemMod mod = (DiyPoemMod) mQuickAdapter.getData().get(position);
+                HashMap<String, Object> map = new HashMap();
+                map.put("model", mod);
+                skipIntent(DiyPoemDetailActivity.class, map, false);
 
             }
         });

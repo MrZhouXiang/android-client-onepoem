@@ -88,7 +88,10 @@ public class EditAdapter extends BaseMultiItemQuickAdapter<EditMod> {
                 helper.setOnClickListener(R.id.del_iv, new OnItemChildClickListener());
                 break;
             case EditMod.HEADER:
-                helper.setImageUrl(R.id.url_iv, URLUtils.DEFAULT_DIY_PATH + item.getContent());//图片展示
+                if (flag) {
+                    helper.setImageUrl(R.id.url_iv, URLUtils.DEFAULT_DIY_PATH + item.getContent());//图片展示
+                    flag = false;
+                }
                 helper.setOnClickListener(R.id.url_iv, new OnItemChildClickListener());
                 EditText et = helper.getView(R.id.title_et);
                 et.addTextChangedListener(new TextWatcher() {
