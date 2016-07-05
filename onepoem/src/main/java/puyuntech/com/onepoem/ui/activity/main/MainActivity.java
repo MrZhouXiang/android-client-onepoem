@@ -13,6 +13,7 @@ import org.xutils.view.annotation.ViewInject;
 import puyuntech.com.onepoem.R;
 import puyuntech.com.onepoem.app.ActivityBuilder.Impl.ActivityDirector;
 import puyuntech.com.onepoem.ui.activity.find.FindFragment;
+import puyuntech.com.onepoem.ui.activity.poem.PoemFragment;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity  extends ActivityDirector {
@@ -71,13 +72,13 @@ public class MainActivity  extends ActivityDirector {
         public Fragment getItem(int position) {
             switch (position) {
                 case R.id.rbHome:
-                    return MainFragment.instantiation(0);
+                    return PoemFragment.instantiation(0);
                 case R.id.rbFind:
                     return FindFragment.instantiation(1);
                 case R.id.rbMe:
-                    return MainFragment.instantiation(2);
+                    return PoemFragment.instantiation(2);
                 default:
-                    return MainFragment.instantiation(0);
+                    return PoemFragment.instantiation(0);
             }
 
         }
