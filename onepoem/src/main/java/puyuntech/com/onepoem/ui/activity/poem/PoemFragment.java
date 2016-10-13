@@ -22,7 +22,7 @@ import puyuntech.com.onepoem.R;
 import puyuntech.com.onepoem.app.ActivityBuilder.Impl.FragmentDirector;
 import puyuntech.com.onepoem.app.AppDataUtils;
 
-@ContentView(R.layout.fragment_main)
+@ContentView(R.layout.fragment_poem)
 public class PoemFragment extends FragmentDirector implements BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @ViewInject(R.id.container)

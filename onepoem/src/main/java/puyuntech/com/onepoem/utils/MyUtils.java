@@ -4,6 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
@@ -12,6 +15,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -199,4 +203,53 @@ public class MyUtils {
         return bitmap;
     }
 
+    /**
+     * 高斯模糊哦算法
+     * @param bkg
+     * @param view
+     */
+    public static void blur(Bitmap bkg, ImageView view,float radius) {
+        long startMs = System.currentTimeMillis();
+        float scaleFactor = 4;
+//        float radius = 10;  //越大模糊度越大
+        Bitmap overlay =
+                Bitmap.createBitmap((int) (bkg.getWidth() / scaleFactor),
+                        (int) (bkg.getHeight() / scaleFactor),
+                        bkg.getConfig());
+        Canvas canvas = new Canvas(overlay);
+        canvas.translate(-view.getLeft() / scaleFactor, -view.getTop() / scaleFactor);
+        canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+        Paint paint = new Paint();
+        paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+        canvas.drawBitmap(bkg, 0, 0, paint);
+        overlay = BlurPic.doBlur(overlay, (int) radius, true);
+        view.setImageBitmap(overlay);
+        //  }
+        // statusText.setText(System.currentTimeMillis() - startMs + "ms");
+    }
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+
+
+
+        Bitmap bitmap = Bitmap.createBitmap(
+
+                drawable.getIntrinsicWidth(),
+
+                drawable.getIntrinsicHeight(),
+
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+
+                        : Bitmap.Config.RGB_565);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        //canvas.setBitmap(bitmap);
+
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        drawable.draw(canvas);
+
+        return bitmap;
+
+    }
 }
