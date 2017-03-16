@@ -41,6 +41,7 @@ import puyuntech.com.onepoem.app.AppDataUtils;
 import puyuntech.com.onepoem.app.BaseAct;
 import puyuntech.com.onepoem.app.MyActivityManager;
 import puyuntech.com.onepoem.app.NetBroadcastReceiver;
+import puyuntech.com.onepoem.app.NetworkBaseActivity;
 import puyuntech.com.onepoem.presenter.BasePresenter;
 import puyuntech.com.onepoem.presenter.IUpdateUIListener;
 import puyuntech.com.onepoem.utils.GetPathFromUri4kitkat;
@@ -55,7 +56,7 @@ import puyuntech.com.onepoem.utils.NetWorkUtils;
  * 修改描述 基础activity抽象类，所有activity需要实现它
  * 修改者 zx
  **/
-public abstract class ActivityDirector extends BaseAct implements BuildHelper, IUpdateUIListener, CamareHelper {
+public abstract class ActivityDirector extends NetworkBaseActivity implements BuildHelper, IUpdateUIListener, CamareHelper {
     @ViewInject(R.id.toolbar)
     protected Toolbar toolbar;
     @ViewInject(R.id.title_tv)

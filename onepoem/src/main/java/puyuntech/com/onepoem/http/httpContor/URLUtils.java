@@ -35,13 +35,13 @@ public class URLUtils {
     /**
      * 服务器地址
      */
-    public static final String BASE_URL = "http://172.21.1.232:8080/";
+    public static final String BASE_URL = "http://192.168.1.110:8080/";
 
 
     /**
      * 接口地址
      */
-    public static final String BASE_URL_APP = BASE_URL + "/myshop/poem/";//接口地址
+    public static final String BASE_URL_APP = BASE_URL + "";//接口地址
 
     /**
      * 资源存放路径
@@ -80,22 +80,22 @@ public class URLUtils {
      * 入参:
      * 返回:
      */
-    public static final String GET_POEMLIST = BASE_URL_APP + "getPoemList";
+    public static final String GET_POEMLIST = BASE_URL_APP + "poem/getList";
     /**
      * 发现
      */
-    public static final String GET_DIYPOEMLIST = BASE_URL_APP + "getDiyPoemList";
+    public static final String GET_DIYPOEMLIST = BASE_URL_APP + "diyPoem/getList";
     /**
      * 说明:获取朝代列表
      * 入参:
      * 返回:
      */
-    public static final String GET_DYNASTY_LIST = BASE_URL_APP + "getDynastyList";
+    public static final String GET_DYNASTY_LIST = BASE_URL_APP + "dynasty/getList";
 
     /**
      * 系统标签获取
      */
-    public static final String GET_TAG_LIST = BASE_URL_APP + "getTagList";
+    public static final String GET_TAG_LIST = BASE_URL_APP + "tag/getList";
 
     /**
      * 上传文件
@@ -105,7 +105,7 @@ public class URLUtils {
     /**
      *
      */
-    public static final String PUBLISH_DIYPOEM = BASE_URL_APP + "/publishDiyPoem";
+    public static final String PUBLISH_DIYPOEM = BASE_URL_APP + "diyPoem/publish";
 
 
 }

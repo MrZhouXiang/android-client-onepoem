@@ -12,6 +12,7 @@ import org.xutils.x;
 import puyuntech.com.onepoem.http.httpContor.base.DiyPoemHttp;
 import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.model.DiyPoemMod;
+import puyuntech.com.onepoem.model.PageParamModel;
 
 
 /**
@@ -80,11 +81,11 @@ public class DiyPoemHttpImpl extends BaseHttpImpl implements DiyPoemHttp {
     }
 
     @Override
-    public RequestParams getDiyPoemList(String id, String size, String page, String tag,final HttpAfterExpand afterHttp) {
+    public RequestParams getDiyPoemList(PageParamModel page, String tag, final HttpAfterExpand afterHttp) {
         RequestParams params = new RequestParams(URLUtils.GET_DIYPOEMLIST);
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("size", size);
-        params.addQueryStringParameter("page", page);
+        params.addQueryStringParameter("pageNum", "" + page.getPageNum());
+        params.addQueryStringParameter("pageSize", "" + page.getPageSize());
+        params.addQueryStringParameter("orderBy", page.getOrderBy());
         params.addQueryStringParameter("tag", tag);
         // 默认缓存存活时间, 单位:毫秒.(如果服务没有返回有效的max-age或Expires)
         params.setCacheMaxAge(1000 * 60);

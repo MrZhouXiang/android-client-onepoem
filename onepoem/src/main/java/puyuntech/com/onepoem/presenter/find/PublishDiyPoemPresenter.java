@@ -18,6 +18,7 @@ import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.http.httpContor.base.HttpFactory;
 import puyuntech.com.onepoem.http.httpContor.base.UploadHttp;
 import puyuntech.com.onepoem.model.DiyPoemMod;
+import puyuntech.com.onepoem.model.PageParamModel;
 import puyuntech.com.onepoem.model.PoemMod;
 import puyuntech.com.onepoem.presenter.BasePresenter;
 
@@ -158,10 +159,11 @@ public class PublishDiyPoemPresenter extends BasePresenter {
         int size = pageSize;
         int page = type.equals(UpdateUIType.REFRESH) ? 0 : 1;
         String tag = ((String) mIUpdateUIListener.getValue(ValueGetType.GET_TAG));
-        //动态代理获取接口
+        PageParamModel pageParamModel = new PageParamModel();
+//动态代理获取接口
         try {
             HttpManager.getInstance().getHttpByMethod(DiyPoemHttp.class).
-                    getDiyPoemList(id, size + "", page + "", tag, new HttpAfterExpand() {
+                    getDiyPoemList(pageParamModel, tag, new HttpAfterExpand() {
                         @Override
                         public void afferHttp() {
                             //                                showProgress(false);

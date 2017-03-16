@@ -3,6 +3,7 @@ package puyuntech.com.onepoem.http.httpContor.base;
 import org.xutils.http.RequestParams;
 
 import puyuntech.com.onepoem.model.DiyPoemMod;
+import puyuntech.com.onepoem.model.PageParamModel;
 
 /**
  * @作者 zx
@@ -23,5 +24,5 @@ public interface DiyPoemHttp {
     RequestParams publishDiyPoem(DiyPoemMod mod, final HttpAfterExpand afterHttp);
 
 
-    RequestParams getDiyPoemList(String id, String size, String page, String tag, HttpAfterExpand list);
+    RequestParams getDiyPoemList(PageParamModel page, String tag, HttpAfterExpand list);
 }

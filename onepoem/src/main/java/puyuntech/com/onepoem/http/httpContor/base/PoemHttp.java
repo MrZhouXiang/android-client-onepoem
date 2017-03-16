@@ -2,6 +2,8 @@ package puyuntech.com.onepoem.http.httpContor.base;
 
 import org.xutils.http.RequestParams;
 
+import puyuntech.com.onepoem.model.PageParamModel;
+
 /**
  * @作者 zx
  * @创建时间 2016-04-19 下午 14:11
@@ -20,6 +22,8 @@ public interface PoemHttp {
      * @param page 刷新加载更多控制 刷新 -1  首次0  更多1
      * @return
      */
-    RequestParams getPoemList(String id, String size, String page, String dynasty_id, final HttpAfterExpand afterHttp);
+//    RequestParams getPoemList(String id, String size, String page, String dynasty_id, final HttpAfterExpand afterHttp);
+
+    RequestParams getPoemList(PageParamModel page,String dynasty_id , final HttpAfterExpand afterHttp);
 
 }

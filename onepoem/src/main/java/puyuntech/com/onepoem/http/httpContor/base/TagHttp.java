@@ -2,6 +2,8 @@ package puyuntech.com.onepoem.http.httpContor.base;
 
 import org.xutils.http.RequestParams;
 
+import puyuntech.com.onepoem.model.PageParamModel;
+
 /**
  * @作者 zx
  * @创建时间 2016-04-19 下午 14:11
@@ -19,6 +21,6 @@ public interface TagHttp {
      * @param size 大小
      * @return
      */
-    RequestParams getTagList(String id, String size, final HttpAfterExpand afterHttp);
+    RequestParams getTagList(PageParamModel page,final HttpAfterExpand afterHttp);
 
 }

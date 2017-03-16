@@ -14,6 +14,7 @@ import puyuntech.com.onepoem.http.httpContor.Result;
 import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.http.httpContor.base.HttpFactory;
 import puyuntech.com.onepoem.http.httpContor.base.PoemHttp;
+import puyuntech.com.onepoem.model.PageParamModel;
 import puyuntech.com.onepoem.model.PoemMod;
 import puyuntech.com.onepoem.presenter.BasePresenter;
 
@@ -57,15 +58,16 @@ public class PoemPresenter extends BasePresenter {
     }
 
     private void getDateNet(final UpdateUIType type) {
-        PoemMod mod = ((PoemMod) mIUpdateUIListener.getValue(ValueGetType.GET_LAST));
-        String id = mod == null ? "-1" : ((PoemMod) mIUpdateUIListener.getValue(ValueGetType.GET_LAST)).getId();
-        int size = pageSize;
-        int page = type.equals(UpdateUIType.REFRESH) ? 0 : 1;
-        String dynasty_id = ((String) mIUpdateUIListener.getValue(ValueGetType.GET_DYNASTY_ID));
+//        PoemMod mod = ((PoemMod) mIUpdateUIListener.getValue(ValueGetType.GET_LAST));
+//        String id = mod == null ? "-1" : ((PoemMod) mIUpdateUIListener.getValue(ValueGetType.GET_LAST)).getId();
+//        int size = pageSize;
+//        int page = type.equals(UpdateUIType.REFRESH) ? 0 : 1;
+//        String dynasty_id = ((String) mIUpdateUIListener.getValue(ValueGetType.GET_DYNASTY_ID));
         //动态代理获取接口
+        PageParamModel pageParamModel = new PageParamModel();
         try {
             HttpManager.getInstance().getHttpByMethod(PoemHttp.class).
-                    getPoemList(id, size + "", page + "", dynasty_id, new HttpAfterExpand() {
+                    getPoemList(pageParamModel, "",new HttpAfterExpand() {
                         @Override
                         public void afferHttp() {
                             //                                showProgress(false);

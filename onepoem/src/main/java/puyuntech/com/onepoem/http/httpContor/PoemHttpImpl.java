@@ -11,6 +11,7 @@ import org.xutils.x;
 
 import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.http.httpContor.base.PoemHttp;
+import puyuntech.com.onepoem.model.PageParamModel;
 
 
 /**
@@ -35,13 +36,17 @@ public class PoemHttpImpl extends BaseHttpImpl implements PoemHttp {
     }
 
     @Override
-    public RequestParams getPoemList(String id, String size, String page, String dynasty_id, final HttpAfterExpand afterHttp) {
+    public RequestParams getPoemList(PageParamModel page,String dynasty_id ,final HttpAfterExpand afterHttp) {
 //        if (isProxy()) {
         RequestParams params = new RequestParams(URLUtils.GET_POEMLIST);
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("size", size);
-        params.addQueryStringParameter("page", page);
-        params.addQueryStringParameter("dynasty_id", dynasty_id);
+
+//        private int pageNum = 1;
+//        private int pageSize =10;
+//        private String orderBy ="";
+        params.addQueryStringParameter("pageNum", "" + page.getPageNum());
+        params.addQueryStringParameter("pageSize", "" + page.getPageSize());
+        params.addQueryStringParameter("orderBy", page.getOrderBy());
+        params.addQueryStringParameter("dynasty_id", ""+dynasty_id);
         // 默认缓存存活时间, 单位:毫秒.(如果服务没有返回有效的max-age或Expires)
         params.setCacheMaxAge(1000 * 60);
         x.http().get(params, new Callback.CacheCallback<String>() {

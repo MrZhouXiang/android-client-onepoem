@@ -11,6 +11,7 @@ import org.xutils.x;
 
 import puyuntech.com.onepoem.http.httpContor.base.HttpAfterExpand;
 import puyuntech.com.onepoem.http.httpContor.base.TagHttp;
+import puyuntech.com.onepoem.model.PageParamModel;
 
 
 /**
@@ -36,11 +37,12 @@ public class TagHttpImpl extends BaseHttpImpl implements TagHttp {
 
 
     @Override
-    public RequestParams getTagList(String id, String size, final HttpAfterExpand afterHttp) {
+    public RequestParams getTagList(PageParamModel page, final HttpAfterExpand afterHttp) {
         //        if (isProxy()) {
         RequestParams params = new RequestParams(URLUtils.GET_TAG_LIST);
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("size", size);
+        params.addQueryStringParameter("pageNum", "" + page.getPageNum());
+        params.addQueryStringParameter("pageSize", "" + page.getPageSize());
+        params.addQueryStringParameter("orderBy", page.getOrderBy());
         // 默认缓存存活时间, 单位:毫秒.(如果服务没有返回有效的max-age或Expires)
         params.setCacheMaxAge(1000 * 60);
         x.http().get(params, new Callback.CacheCallback<String>() {

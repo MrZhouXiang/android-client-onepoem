@@ -1,6 +1,8 @@
 package puyuntech.com.onepoem.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import puyuntech.com.onepoem.utils.NetWorkUtils;
 
@@ -34,7 +36,11 @@ public class APP extends Application {
 
         initData();
     }
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     public void initData() {
         //xUtils初始化
@@ -43,6 +49,7 @@ public class APP extends Application {
         DBUtilsX.init();
         //初始化网路监听
         mNetWorkState = NetWorkUtils.getNetworkState(this);
+
     }
 
 }
