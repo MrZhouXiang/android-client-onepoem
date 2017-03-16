@@ -66,7 +66,7 @@ public class PoemDetailActivity extends ActivityDirector {
     public void showView() {
         Glide.with(this).load(mod.getUrl()).crossFade().into(icon_iv);//图片展示
         content_tv.setText(StringUtils.getNotNullStr(mod.getContent()));
-        author_tv.setText("----"+StringUtils.getNotNullStr(mod.getAuthor_name()));
+        author_tv.setText("----"+StringUtils.getNotNullStr(mod.getAuthorName()));
     }
 
     @Override

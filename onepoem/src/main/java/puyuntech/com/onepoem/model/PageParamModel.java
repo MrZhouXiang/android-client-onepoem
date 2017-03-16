@@ -1,10 +1,13 @@
 package puyuntech.com.onepoem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
  * Created by wnb17 on 2017/3/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)//可忽略多余字段
 public class PageParamModel implements Serializable {
     private int pageNum = 1;
     private int pageSize =10;

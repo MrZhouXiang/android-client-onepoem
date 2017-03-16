@@ -1,5 +1,6 @@
 package puyuntech.com.onepoem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nicodelee.utils.JsonUtils;
 import com.nicodelee.utils.ListUtils;
 import com.nicodelee.utils.StringUtils;
@@ -15,6 +16,7 @@ import java.util.List;
  *
  * @author Administrator
  */
+@JsonIgnoreProperties(ignoreUnknown = true)//可忽略多余字段
 public class DiyPoemMod implements Serializable {
     private String id; // 主键
     private String user_id; // 外键 诗人id

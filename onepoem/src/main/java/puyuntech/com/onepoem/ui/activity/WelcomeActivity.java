@@ -18,7 +18,9 @@ import puyuntech.com.onepoem.app.ActivityBuilder.Impl.ActivityDirector;
 import puyuntech.com.onepoem.app.AppDataUtils;
 import puyuntech.com.onepoem.httpnew.BaseComApi;
 import puyuntech.com.onepoem.httpnew.RetroFactory;
+import puyuntech.com.onepoem.httpnew.api.DynastyService;
 import puyuntech.com.onepoem.httpnew.api.TagService;
+import puyuntech.com.onepoem.model.DynastyMod;
 import puyuntech.com.onepoem.model.TagMod;
 import puyuntech.com.onepoem.presenter.WelcomePresenter;
 import puyuntech.com.onepoem.ui.activity.main.MainActivity;
@@ -75,8 +77,8 @@ public class WelcomeActivity extends ActivityDirector {
         HandlerUtil.getUIHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                ((WelcomePresenter)mPresenter).initNetData();
-                getTagList2();
+//                ((WelcomePresenter) mPresenter).initNetData();
+                addDisposable(getTagList2());
             }
         }, 1000);
     }
@@ -87,11 +89,26 @@ public class WelcomeActivity extends ActivityDirector {
 //            public void run() {
 //                getTagList2();
         return RetroFactory.getInstance().create(TagService.class).getList().compose(BaseComApi.background()).doOnError(Throwable::printStackTrace)
-                .doOnNext(baseEntity -> {
+                .filter(baseEntity -> {
                     if (baseEntity.isSuccess()) {
                         List<TagMod> list = baseEntity.getData();
                         AppDataUtils.tags.clear();
                         AppDataUtils.tags.addAll(list);
+                        return true;
+                    } else {
+                        baseEntity.showMsg(WelcomeActivity.this);
+                        return false;
+                    }
+                })
+                .flatMap(userBaseEntity -> {
+                    return RetroFactory.getInstance().create(DynastyService.class).getList().compose(BaseComApi.background());
+                })
+                .doOnError(Throwable::printStackTrace)
+                .doOnNext(baseEntity -> {
+                    if (baseEntity.isSuccess()) {
+                        List<DynastyMod> list = baseEntity.getData();
+                        AppDataUtils.dynasty.clear();
+                        AppDataUtils.dynasty.addAll(list);
                         skipIntent(MainActivity.class, true);
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     } else {

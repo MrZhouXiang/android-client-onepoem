@@ -39,7 +39,7 @@ public abstract class FragmentDirector extends BaseFragment implements BuildHelp
 
 
     private HttpAfterExpand afterExpand;
-    private int pageFlag;//分页标示 0：刷新 1：更多
+    public int pageFlag;//分页标示 0：刷新 1：更多
     private List pageMods;//分页数据
     private InitBuilder initBuilder;//初始化建造者
     protected boolean isHasMore = true;

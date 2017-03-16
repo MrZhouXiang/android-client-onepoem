@@ -26,7 +26,7 @@ public class PoemFragmentAdapter extends BaseQuickAdapter<PoemMod> {
     protected void convert(BaseViewHolder helper, PoemMod item) {
         helper.setText(R.id.tweetName, item.getTitle())
                 .setText(R.id.tweetText, item.getContent())
-                .setText(R.id.tweetDate, item.getAuthor_name())
+                .setText(R.id.tweetDate, item.getAuthorName())
 //                .setImageUrl(R.id.tweetAvatar, item.getUrl(), R.mipmap.ic_launcher, new GlideCircleTransform(mContext))
                 .setImageUrl(R.id.tweetAvatar, item.getUrl(), R.mipmap.ic_launcher, new GlideCircleTransform(mContext));
 //                .setVisible(R.id.tweetRT, item.isRetweet())

@@ -1,5 +1,7 @@
 package puyuntech.com.onepoem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -8,6 +10,7 @@ import java.sql.Date;
  *
  * @author Administrator
  */
+@JsonIgnoreProperties(ignoreUnknown = true)//可忽略多余字段
 public class TagMod implements Serializable {
     private String id; // 主键
     private String name; // 名字

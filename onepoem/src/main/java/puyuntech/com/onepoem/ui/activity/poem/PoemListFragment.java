@@ -19,12 +19,23 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import puyuntech.com.onepoem.R;
+import puyuntech.com.onepoem.app.ActivityBuilder.Impl.ActivityDirector;
 import puyuntech.com.onepoem.app.ActivityBuilder.Impl.FragmentDirector;
 import puyuntech.com.onepoem.app.AppDataUtils;
 import puyuntech.com.onepoem.app.BaseAct;
+import puyuntech.com.onepoem.httpnew.BaseComApi;
+import puyuntech.com.onepoem.httpnew.RetroFactory;
+import puyuntech.com.onepoem.httpnew.api.DynastyService;
+import puyuntech.com.onepoem.httpnew.api.PoemService;
+import puyuntech.com.onepoem.httpnew.api.TagService;
+import puyuntech.com.onepoem.model.DynastyMod;
 import puyuntech.com.onepoem.model.PoemMod;
+import puyuntech.com.onepoem.model.TagMod;
 import puyuntech.com.onepoem.presenter.poem.PoemPresenter;
+import puyuntech.com.onepoem.ui.activity.WelcomeActivity;
+import puyuntech.com.onepoem.ui.activity.main.MainActivity;
 import puyuntech.com.onepoem.ui.adapter.PoemFragmentAdapter;
 
 @ContentView(R.layout.fragment_poem_list)
@@ -147,10 +158,24 @@ public class PoemListFragment extends FragmentDirector implements BaseQuickAdapt
     @Override
     public void getDataNet() {
 //        ((BaseAct) getActivity()).loadingDialog.showDialog();
-        ((PoemPresenter) mPresenter).refresh();
-
+//        ((PoemPresenter) mPresenter).refresh();
+        getPoemList();
     }
 
+    private Disposable getPoemList() {
+        return RetroFactory.getInstance().create(PoemService.class).getList().compose(BaseComApi.background()).doOnError(Throwable::printStackTrace)
+                .doOnNext(baseEntity -> {
+                    if (baseEntity.isSuccess()) {
+//                        List<PoemMod> list = baseEntity.getData();
+                        List l = baseEntity.getData();
+                        refreshPage(pageFlag, l, mQuickAdapter, mSwipeRefreshLayout, mRecyclerView);
+                    } else {
+                        baseEntity.showMsg(getActivity());
+                    }
+                })
+                .compose(((ActivityDirector) getActivity()).flowableLoading())//进度条展示
+                .subscribe();
+    }
 
     @Override
     public void onNetChange() {
@@ -160,14 +185,16 @@ public class PoemListFragment extends FragmentDirector implements BaseQuickAdapt
     @Override
     public void onRefresh() {
         //刷新
-        ((PoemPresenter) mPresenter).refresh();
+        pageFlag = REFRESH_FLAG;
+        getPoemList();
 
     }
 
     @Override
     public void onLoadMoreRequested() {
         //加载更多
-        ((PoemPresenter) mPresenter).loadMore();
+        pageFlag = LOAD_MORE_FLAG;
+        getPoemList();
     }
 
 

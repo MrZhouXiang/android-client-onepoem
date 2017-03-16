@@ -1,5 +1,7 @@
 package puyuntech.com.onepoem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -8,11 +10,12 @@ import java.sql.Date;
  *
  * @author Administrator
  */
+@JsonIgnoreProperties(ignoreUnknown = true)//可忽略多余字段
 public class DynastyMod implements Serializable {
     private String id; // 主键
     private String name; // 名字
-    private Date begin_time; // 开始时间
-    private Date end_time; // 结束时间
+    private String beginTime; // 开始时间
+    private String endTime; // 结束时间
 
     public String getId() {
         return id;
@@ -30,20 +33,20 @@ public class DynastyMod implements Serializable {
         this.name = name;
     }
 
-    public Date getBegin_time() {
-        return begin_time;
+    public String getBeginTime() {
+        return beginTime;
     }
 
-    public void setBegin_time(Date begin_time) {
-        this.begin_time = begin_time;
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
     }
 
-    public Date getEnd_time() {
-        return end_time;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setEnd_time(Date end_time) {
-        this.end_time = end_time;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public DynastyMod() {

@@ -1,6 +1,8 @@
 package puyuntech.com.onepoem.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 import puyuntech.com.onepoem.http.httpContor.URLUtils;
@@ -10,45 +12,43 @@ import puyuntech.com.onepoem.http.httpContor.URLUtils;
  *
  * @author Administrator
  */
-public class PoemMod implements Serializable {
-    private String id; // 主键
-    private String author_id; // 外键 诗人id
-    private String author_name; // 诗人name
-    private String title; // 标题
-    private String content; // 内容
-    private String url; // 图片地址
+@JsonIgnoreProperties(ignoreUnknown = true)//可忽略多余字段
+public class PoemMod implements Serializable {  private Integer id;
 
+    private Integer authorId;
 
-    public String getAuthor_name() {
-        return author_name;
-    }
+    private String authorName;
 
-    public void setAuthor_name(String author_name) {
-        this.author_name = author_name;
-    }
+    private String title;
 
-    public String getUrl() {
-        return URLUtils.DEFAULT_MODEL_PATH + url;
-    }
+    private String content;
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+    private String url;
 
-    public String getId() {
+    private Integer status;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getAuthor_id() {
-        return author_id;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(String author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName == null ? null : authorName.trim();
     }
 
     public String getTitle() {
@@ -56,7 +56,7 @@ public class PoemMod implements Serializable {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title == null ? null : title.trim();
     }
 
     public String getContent() {
@@ -64,7 +64,33 @@ public class PoemMod implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = content == null ? null : content.trim();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    private  Author author ;
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
 
